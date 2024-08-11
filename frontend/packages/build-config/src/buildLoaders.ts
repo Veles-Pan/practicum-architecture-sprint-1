@@ -11,11 +11,6 @@ export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
 		type: "asset/resource"
 	};
 
-	// const svgrLoader = {
-	// 	test: /\.svg$/i,
-	// 	use: "file-loader"
-	// };
-
 	const cssLoader = {
 		test: /\.css$/,
 		use: [isDev ? "style-loader" : MiniCssExtractPlugin.loader, "css-loader"]
