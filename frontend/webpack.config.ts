@@ -21,9 +21,9 @@ export default (env: EnvVariables) => {
 		public: path.resolve(__dirname, "public"),
 		src: path.resolve(__dirname, "src")
 	};
-	const AUTH_REMOTE_URL = env.AUTH_REMOTE_URL ?? "http://localhost:3001";
-	const GALLERY_REMOTE_URL = env.GALLERY_REMOTE_URL ?? "http://localhost:3002";
-	const PROFILE_REMOTE_URL = env.PROFILE_REMOTE_URL ?? "http://localhost:3003";
+	const AUTH_REMOTE_URL = process.env.AUTH_REMOTE_URL ?? "http://localhost:3004";
+	const GALLERY_REMOTE_URL = process.env.GALLERY_REMOTE_URL ?? "http://localhost:3002";
+	const PROFILE_REMOTE_URL = process.env.PROFILE_REMOTE_URL ?? "http://localhost:3003";
 
 	const config: webpack.Configuration = buildWebpack({
 		port: env.port ?? 3000,

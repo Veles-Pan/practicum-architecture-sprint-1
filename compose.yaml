@@ -46,7 +46,7 @@ services:
             context: frontend
             dockerfile: ./services/auth/Dockerfile
         ports:
-            - "3004:3000"
+            - "3004:3004"
         depends_on:
             - backend
         environment:
@@ -57,7 +57,7 @@ services:
             context: frontend
             dockerfile: ./services/profile/Dockerfile
         ports:
-            - "3003:3000"
+            - "3003:3003"
         depends_on:
             - backend
         environment:
@@ -68,20 +68,11 @@ services:
             context: frontend
             dockerfile: ./services/gallery/Dockerfile
         ports:
-            - "3002:3000"
+            - "3002:3002"
         depends_on:
             - backend
         environment:
             - port=3002
-
-    frontend-test:
-        build:
-            context: frontend
-            dockerfile: ./Dockerfile
-        command: yarn test:microfrontend
-        restart: "no"
-        environment:
-            CI: true
 
     frontend:
         build:

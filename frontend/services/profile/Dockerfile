@@ -1,4 +1,4 @@
-FROM node:18-slim
+FROM node:18-slim AS build-stage
 
 WORKDIR /app
 
@@ -6,13 +6,18 @@ COPY . .
 
 RUN npm install
 
-COPY . .
+WORKDIR /app/services/profile
 
-WORKDIR /services/profile
+RUN npm run build:prod
 
-COPY . .
+FROM nginx:1.25.3-alpine
 
-CMD [ "yarn", "start" ]
+WORKDIR /app
+
+COPY --from=build-stage /app/services/profile/build ./
+COPY --from=build-stage /app/services/profile/nginx.conf /etc/nginx/conf.d/default.conf
+
+ENV NGINX_PORT=3003
 
 EXPOSE 3003
 
