@@ -15,6 +15,9 @@
 	],
 	"scripts": {
 		"start": "webpack serve --env mode=development",
+		"start:auth": "cd services/auth && webpack serve --env mode=development",
+		"start:gallery": "cd services/gallery && webpack serve --env mode=development",
+		"start:profile": "cd services/profile && webpack serve --env mode=development",
 		"build:dev": "webpack --env mode=development",
 		"build:prod": "webpack --env mode=production",
 		"build:mobile": "webpack --env mode=production --env platform=mobile",
