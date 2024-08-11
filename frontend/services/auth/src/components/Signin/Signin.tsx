@@ -1,12 +1,15 @@
-import { UserDispatch, loginUser, routes } from "@packages/shared";
+import { UserDispatch, loginUser } from "@packages/shared";
 import { FC, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import "./Signin.css";
 
 export const Signin: FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+
+	const navigate = useNavigate();
 
 	const dispatch = useDispatch<UserDispatch>();
 
@@ -15,15 +18,14 @@ export const Signin: FC = () => {
 
 		dispatch(loginUser({ email, password }))
 			.then((action) => {
-				// Проверяем, был ли экшен успешным
 				if (loginUser.fulfilled.match(action)) {
 					console.log("User logged in", action.payload);
+					navigate("/", { replace: true });
 				} else {
 					console.log("Error logging in", action.error.message);
 				}
 			})
 			.catch((error) => {
-				// Здесь .catch срабатывает только на ошибки, произошедшие внутри `dispatch`, например, если возникла ошибка в процессе dispatch-а.
 				console.log("Unexpected error", error);
 			});
 	}

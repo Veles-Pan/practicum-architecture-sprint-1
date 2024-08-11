@@ -5,6 +5,7 @@ import { ProtectedRoute } from "../components/ProtectedRoute";
 import { SigninPage } from "../pages/SigninPage";
 import { MainPage } from "../pages/MainPage";
 import { routes } from "@packages/shared";
+import { RegisterPage } from "../pages/RegisterPage";
 
 export const router = createBrowserRouter([
 	{
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
 			{
 				path: routes.signin,
 				element: <SigninPage />
+			},
+			{
+				path: routes.register,
+				element: <RegisterPage />
 			}
 		]
 	}

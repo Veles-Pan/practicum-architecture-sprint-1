@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { Signin } from "auth/src/components/Signin";
+//@ts-expect-error
+import { Signin } from "auth/Auth";
 
 export const SigninPage: FC = () => {
 	return (

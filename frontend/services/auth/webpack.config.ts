@@ -32,7 +32,7 @@ export default (env: EnvVariables) => {
 			name: "auth",
 			filename: "remoteEntry.js",
 			exposes: {
-				"./Signin": "./src/components/Signin/index.ts"
+				"./Auth": "./src/components/index.ts"
 			},
 			shared: {
 				...packageJson.dependencies,

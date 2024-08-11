@@ -5,9 +5,9 @@ import { Navigate } from "react-router-dom";
 export const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
 	const isLoggedIn = false;
 
-	if (!isLoggedIn) {
-		return <Navigate to='./signin' replace={true} />;
-	}
+	// if (!isLoggedIn) {
+	// 	return <Navigate to='./signin' replace={true} />;
+	// }
 
-	return isLoggedIn ? children : null;
+	return children;
 };

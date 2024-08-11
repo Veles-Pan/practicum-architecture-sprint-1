@@ -3,10 +3,12 @@ import { Link, Outlet } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "@packages/shared/src/data";
 
+import "./App.css";
+
 export const App = () => {
 	return (
 		<Provider store={store}>
-			<div data-testid={"App.DataTestId"}>
+			<div className='page__content'>
 				<h1>PAGE</h1>
 				<br />
 

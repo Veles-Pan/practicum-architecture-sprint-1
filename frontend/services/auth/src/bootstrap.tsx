@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import { Signin } from "./components/Signin/Signin";
 
 const root = document.getElementById("root");
 
@@ -9,4 +8,4 @@ if (!root) {
 
 const container = createRoot(root);
 
-container.render(<Signin />);
+container.render(<div />);

@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { Gallery } from "gallery/src/components/Gallery/Gallery";
+//@ts-expect-error
+import { Gallery } from "gallery/Gallery";
 
 export const MainPage: FC = () => {
 	console.log("object");
