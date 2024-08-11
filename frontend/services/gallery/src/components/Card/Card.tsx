@@ -1,16 +1,19 @@
-import React, { FC } from "react";
-
-import { useSelector } from "react-redux";
+import { FC, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "@packages/shared";
 
 interface CardProps {
 	card: any;
 	onCardClick: (card: any) => void;
-	onCardLike: (card: any) => void;
 	onCardDelete: (card: any) => void;
+	onCardLike: (card: any, isLiked: boolean) => void;
 }
 
-export const Card: FC<CardProps> = ({ card, onCardClick, onCardLike, onCardDelete }) => {
+export const Card: FC<CardProps> = ({ card, onCardClick, onCardDelete, onCardLike }) => {
+	const currentUser = useSelector(getUser);
+	const [likeCount, setLikeCount] = useState(card.likes.length);
+	const [isLiked, setIsLiked] = useState(card.likes.some((i: any) => i._id === currentUser?._id));
+
 	const cardStyle = { backgroundImage: `url(${card.link})` };
 
 	function handleClick() {
@@ -18,22 +21,23 @@ export const Card: FC<CardProps> = ({ card, onCardClick, onCardLike, onCardDelet
 	}
 
 	function handleLikeClick() {
-		onCardLike(card);
+		const updatedIsLiked = !isLiked;
+		const updatedLikeCount = updatedIsLiked ? likeCount + 1 : likeCount - 1;
+
+		setIsLiked(updatedIsLiked);
+		setLikeCount(updatedLikeCount);
+		onCardLike(card, isLiked);
 	}
 
 	function handleDeleteClick() {
 		onCardDelete(card);
 	}
 
-	const currentUser = useSelector(getUser);
-
-	const isLiked = card.likes.some((i: any) => i._id === currentUser?._id);
-	const cardLikeButtonClassName = `card__like-button ${isLiked && "card__like-button_is-active"}`;
-
 	const isOwn = card.owner._id === currentUser?._id;
 	const cardDeleteButtonClassName = `card__delete-button ${
 		isOwn ? "card__delete-button_visible" : "card__delete-button_hidden"
 	}`;
+	const cardLikeButtonClassName = `card__like-button ${isLiked ? "card__like-button_is-active" : ""}`;
 
 	return (
 		<li className='places__item card'>
@@ -43,7 +47,7 @@ export const Card: FC<CardProps> = ({ card, onCardClick, onCardLike, onCardDelet
 				<h2 className='card__title'>{card.name}</h2>
 				<div className='card__likes'>
 					<button type='button' className={cardLikeButtonClassName} onClick={handleLikeClick}></button>
-					<p className='card__like-count'>{card.likes.length}</p>
+					<p className='card__like-count'>{likeCount}</p>
 				</div>
 			</div>
 		</li>

@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-import { Provider } from "react-redux";
-import { store } from "@packages/shared/src/data";
+import { Outlet } from "react-router-dom";
+
+//@ts-ignore
+import { useCheckAuth } from "auth/Auth";
 
 import "./App.css";
+import { Header } from "../Header";
+import { Footer } from "../Footer";
 
 export const App = () => {
+	useCheckAuth();
+
 	return (
-		<Provider store={store}>
-			<div className='page__content'>
-				<Outlet />
-			</div>
-		</Provider>
+		<div className='page__content'>
+			<Header />
+			<Outlet />
+			<Footer />
+		</div>
 	);
 };

@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { addCard, fetchGalleryCards } from "./actions";
+import { addCard, deleteCard, fetchGalleryCards } from "./actions";
 import { GalleryListState } from "./store";
 import { GalleryCardData, GallerySchema } from "./types";
 
@@ -55,6 +55,12 @@ export const galleryListSlice = createSlice({
 			.addCase(addCard.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.error.message;
+			})
+			.addCase(deleteCard.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.error = undefined;
+
+				galleryAdapter.removeOne(state, action.payload);
 			});
 	}
 });

@@ -26,16 +26,13 @@ export const Gallery = () => {
 		setSelectedCard(null);
 	};
 
-	const handleCardLike = (card: any) => {
-		console.log(card);
-		dispatch(changeLikeCard({ card, userId: "123" }));
+	const handleCardLike = (card: any, isLiked: boolean) => {
+		dispatch(changeLikeCard({ card, isLiked }));
 	};
 
 	const handleCardDelete = (card: any) => {
 		dispatch(deleteCard(card));
 	};
-
-	console.log("cards", cards);
 
 	return (
 		<>

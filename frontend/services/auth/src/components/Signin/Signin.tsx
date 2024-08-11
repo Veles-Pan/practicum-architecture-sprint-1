@@ -17,7 +17,7 @@ export const Signin: FC = () => {
 		e.preventDefault();
 
 		dispatch(loginUser({ email, password }))
-			.then((action) => {
+			.then(() => {
 				dispatch(checkToken()).then(() => {
 					dispatch(fetchUserData()).then(() => {
 						navigate("/", { replace: true });

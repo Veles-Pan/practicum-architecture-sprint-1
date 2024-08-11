@@ -137,5 +137,4 @@ export const userListSlice = createSlice({
 	}
 });
 
-// Экспортируем action для logout
 export const { logout } = userListSlice.actions;

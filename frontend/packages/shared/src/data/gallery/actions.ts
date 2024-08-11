@@ -26,18 +26,14 @@ export const fetchGalleryCards = createAsyncThunk<GalleryCardData[], void, { sta
 
 export const changeLikeCard = createAsyncThunk<
 	boolean,
-	{ card: GalleryCardData; userId: string },
+	{ card: GalleryCardData; isLiked: boolean },
 	{ state: GalleryListState }
->("gallery/changeLikeCard", async ({ card, userId }, { rejectWithValue, getState, dispatch }) => {
+>("gallery/changeLikeCard", async ({ card, isLiked }, { rejectWithValue, getState, dispatch }) => {
 	try {
-		const isLiked = card.likes.some((i) => i._id === userId);
-
 		const changeLike = await api.changeLikeCardStatus(card._id, !isLiked).catch((error) => {
 			console.log(error);
-			return rejectWithValue("Error with fetching claim data");
+			throw new Error("Error");
 		});
-
-		console.log("check", changeLike);
 
 		return changeLike;
 	} catch (error) {
@@ -46,18 +42,16 @@ export const changeLikeCard = createAsyncThunk<
 	}
 });
 
-export const deleteCard = createAsyncThunk<boolean, GalleryCardData, { state: GalleryListState }>(
+export const deleteCard = createAsyncThunk<string, GalleryCardData, { state: GalleryListState }>(
 	"gallery/deleteCard",
-	async (card, { rejectWithValue, getState, dispatch }) => {
+	async (card, { rejectWithValue }) => {
 		try {
-			const deleteCard = await api.removeCard(card._id).catch((error) => {
+			await api.removeCard(card._id).catch((error) => {
 				console.log(error);
-				return rejectWithValue("Error with fetching claim data");
+				throw new Error("Error");
 			});
 
-			console.log("check", deleteCard);
-
-			return deleteCard;
+			return card._id;
 		} catch (error) {
 			console.log(error);
 			return rejectWithValue("Error with fetching request data");
@@ -76,10 +70,8 @@ export const addCard = createAsyncThunk<
 	try {
 		const addCard = await api.addCard(card).catch((error) => {
 			console.log(error);
-			return rejectWithValue("Error with fetching claim data");
+			throw new Error("Error");
 		});
-
-		console.log("addCard", addCard);
 
 		return addCard;
 	} catch (error) {

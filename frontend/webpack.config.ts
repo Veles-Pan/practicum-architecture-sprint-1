@@ -10,6 +10,7 @@ interface EnvVariables {
 	platform?: BuildPlatform;
 	AUTH_REMOTE_URL?: string;
 	GALLERY_REMOTE_URL?: string;
+	PROFILE_REMOTE_URL?: string;
 }
 
 export default (env: EnvVariables) => {
@@ -22,6 +23,7 @@ export default (env: EnvVariables) => {
 	};
 	const AUTH_REMOTE_URL = env.AUTH_REMOTE_URL ?? "http://localhost:3001";
 	const GALLERY_REMOTE_URL = env.GALLERY_REMOTE_URL ?? "http://localhost:3002";
+	const PROFILE_REMOTE_URL = env.PROFILE_REMOTE_URL ?? "http://localhost:3003";
 
 	const config: webpack.Configuration = buildWebpack({
 		port: env.port ?? 3000,
@@ -37,23 +39,23 @@ export default (env: EnvVariables) => {
 			filename: "remoteEntry.js",
 
 			remotes: {
-				// shop: `shop@${SHOP_REMOTE_URL}/remoteEntry.js`,
 				gallery: `gallery@${GALLERY_REMOTE_URL}/remoteEntry.js`,
-				auth: `auth@${AUTH_REMOTE_URL}/remoteEntry.js`
+				auth: `auth@${AUTH_REMOTE_URL}/remoteEntry.js`,
+				profile: `profile@${PROFILE_REMOTE_URL}/remoteEntry.js`
 			},
 			shared: {
 				...packageJson.dependencies,
 				react: {
-					eager: true
-					// requiredVersion: packageJson.dependencies['react'],
+					eager: true,
+					requiredVersion: packageJson.dependencies["react"]
 				},
 				"react-router-dom": {
-					eager: true
-					// requiredVersion: packageJson.dependencies['react-router-dom'],
+					eager: true,
+					requiredVersion: packageJson.dependencies["react-router-dom"]
 				},
 				"react-dom": {
-					eager: true
-					// requiredVersion: packageJson.dependencies['react-dom'],
+					eager: true,
+					requiredVersion: packageJson.dependencies["react-dom"]
 				}
 			}
 		})

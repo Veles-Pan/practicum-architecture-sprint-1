@@ -1,0 +1,18 @@
+FROM node:18-slim
+
+ENV NODE_ENV development
+ENV AUTH_REMOTE_URL ${AUTH_REMOTE_URL}
+ENV GALLERY_REMOTE_URL ${GALLERY_REMOTE_URL}
+ENV PROFILE_REMOTE_URL ${PROFILE_REMOTE_URL}
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm i 
+
+COPY . .
+
+CMD [ "yarn", "start" ]
+
+EXPOSE 3000
