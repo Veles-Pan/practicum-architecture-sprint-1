@@ -9,9 +9,6 @@ export const App = () => {
 	return (
 		<Provider store={store}>
 			<div className='page__content'>
-				<h1>PAGE</h1>
-				<br />
-
 				<Outlet />
 			</div>
 		</Provider>

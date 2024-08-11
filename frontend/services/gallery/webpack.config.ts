@@ -32,7 +32,7 @@ export default (env: EnvVariables) => {
 			name: "gallery",
 			filename: "remoteEntry.js",
 			exposes: {
-				"./Gallery": "./src/components/Gallery/Gallery.tsx"
+				"./Gallery": "./src/components/index.ts"
 			},
 			shared: {
 				...packageJson.dependencies,

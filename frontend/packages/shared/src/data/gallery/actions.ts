@@ -64,3 +64,26 @@ export const deleteCard = createAsyncThunk<boolean, GalleryCardData, { state: Ga
 		}
 	}
 );
+
+export const addCard = createAsyncThunk<
+	GalleryCardData,
+	{
+		name: string;
+		link: string;
+	},
+	{ state: GalleryListState }
+>("gallery/addCard", async (card, { rejectWithValue, getState, dispatch }) => {
+	try {
+		const addCard = await api.addCard(card).catch((error) => {
+			console.log(error);
+			return rejectWithValue("Error with fetching claim data");
+		});
+
+		console.log("addCard", addCard);
+
+		return addCard;
+	} catch (error) {
+		console.log(error);
+		return rejectWithValue("Error with fetching request data");
+	}
+});

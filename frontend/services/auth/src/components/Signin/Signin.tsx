@@ -1,4 +1,4 @@
-import { UserDispatch, loginUser } from "@packages/shared";
+import { UserDispatch, checkToken, fetchUserData, loginUser } from "@packages/shared";
 import { FC, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,12 +18,11 @@ export const Signin: FC = () => {
 
 		dispatch(loginUser({ email, password }))
 			.then((action) => {
-				if (loginUser.fulfilled.match(action)) {
-					console.log("User logged in", action.payload);
-					navigate("/", { replace: true });
-				} else {
-					console.log("Error logging in", action.error.message);
-				}
+				dispatch(checkToken()).then(() => {
+					dispatch(fetchUserData()).then(() => {
+						navigate("/", { replace: true });
+					});
+				});
 			})
 			.catch((error) => {
 				console.log("Unexpected error", error);

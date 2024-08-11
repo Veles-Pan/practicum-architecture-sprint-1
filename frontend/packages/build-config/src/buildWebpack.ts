@@ -27,14 +27,14 @@ export function buildWebpack(options: BuildOptions): webpack.Configuration {
 					use: [isDev ? "style-loader" : MiniCssExtractPlugin.loader, "css-loader"]
 				},
 				{
-					test: /\.svg$/, // Правило для обработки SVG-файлов
-					oneOf: [
+					test: /\.svg$/i,
+					use: [
 						{
-							issuer: /\.[jt]sx?$/,
-							use: ["@svgr/webpack"] // Использовать для React-компонентов
-						},
-						{
-							type: "asset/resource" // Для остальных случаев как файл
+							loader: "file-loader", // Используйте file-loader вместо @svgr/webpack для тестирования
+							options: {
+								name: "[name].[ext]",
+								outputPath: "images/"
+							}
 						}
 					]
 				}

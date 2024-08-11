@@ -12,4 +12,6 @@ export interface UserSchema {
 	error?: string;
 	isLoggedIn: boolean;
 	user?: UserData;
+	email: string;
+	jwt?: string;
 }

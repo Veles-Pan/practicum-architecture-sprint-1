@@ -1,12 +1,22 @@
 import { FC } from "react";
 //@ts-expect-error
-import { Gallery } from "gallery/Gallery";
+import { Gallery, AddCard } from "gallery/Gallery";
+//@ts-expect-error
+import { Profile } from "auth/Auth";
+import { Header } from "../components/Header";
 
 export const MainPage: FC = () => {
-	console.log("object");
 	return (
-		<div>
-			<Gallery />
-		</div>
+		<>
+			<Header />
+			<main className='content '>
+				<section className='profile page__section'>
+					<Profile />
+					<AddCard />
+				</section>
+
+				<Gallery />
+			</main>
+		</>
 	);
 };

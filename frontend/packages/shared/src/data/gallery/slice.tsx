@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { fetchGalleryCards } from "./actions";
+import { addCard, fetchGalleryCards } from "./actions";
 import { GalleryListState } from "./store";
 import { GalleryCardData, GallerySchema } from "./types";
 
@@ -11,7 +11,7 @@ const initialState: GallerySchema = {
 	entities: {}
 };
 
-//@ts-ignore
+//@ts-expect-error
 const galleryAdapter = createEntityAdapter<GalleryCardData>({
 	selectId: (request) => request._id
 });
@@ -39,6 +39,20 @@ export const galleryListSlice = createSlice({
 				galleryAdapter.setAll(state, action.payload);
 			})
 			.addCase(fetchGalleryCards.rejected, (state, action) => {
+				state.isLoading = false;
+				state.error = action.error.message;
+			})
+			.addCase(addCard.pending, (state, action) => {
+				state.isLoading = true;
+				state.error = undefined;
+			})
+			.addCase(addCard.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.error = undefined;
+
+				galleryAdapter.addOne(state, action.payload);
+			})
+			.addCase(addCard.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.error.message;
 			});
